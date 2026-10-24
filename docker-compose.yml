@@ -1,0 +1,17 @@
+services:
+  defter:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "5153:5153"
+    environment:
+      BETTER_AUTH_URL: ${BETTER_AUTH_URL:?BETTER_AUTH_URL gerekli}
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET:?BETTER_AUTH_SECRET gerekli}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+      ADMIN_NAME: ${ADMIN_NAME:-Yönetici}
+    volumes:
+      - defter-data:/app/data
+
+volumes:
+  defter-data:

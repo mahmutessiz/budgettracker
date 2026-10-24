@@ -1,0 +1,152 @@
+/* Hallmark · macrostructure: app shell (side rail) · tone: neobrutalist · anchor hue: yellow ~90
+ * theme: custom (vibe: "flat paper, thick ink, one loud yellow") · light + dark
+ * paper #F4EFE3 · accent #FFD43B · Bricolage Grotesque + Geist + Geist Mono
+ */
+:root {
+  color-scheme: light;
+
+  --color-paper: #f4efe3;
+  --color-surface: #fffdf7;
+  /* Metin, kenarlık ve sert gölge; koyu temada açık renge döner */
+  --color-ink: #16130f;
+  --color-shadow: #16130f;
+  --color-muted: #5c564b;
+  --color-faint: #7a7365;
+  --color-rule: #e4dccb;
+  --color-grid: #cfc6b3;
+  --color-accent: #ffd43b;
+  /* Sarı zemin üstündeki metin her temada koyu kalır */
+  --color-on-accent: #16130f;
+  --color-accent-soft: #ffe98a;
+  --color-row-hover: #fff3c4;
+  --color-focus: #2f4bff;
+  --color-focus-ink: #1e2fa8;
+  --color-up: #ffd9d2;
+  --color-down: #cdebd9;
+  --color-danger: #d7263d;
+  --color-disabled: #a39c8c;
+  --color-disabled-bg: #ede6d6;
+  --color-backdrop: rgb(22 19 15 / 0.45);
+  /* Ters panel (yönetici kenar çubuğu): her temada koyu */
+  --color-inverse: #16130f;
+  --color-on-inverse: #fffdf7;
+  --color-on-inverse-muted: #cfc6b3;
+
+  /* Kategori renkleri (dataviz doğrulayıcısı: açık zemin #F4EFE3) */
+  --cat-kira: #2f4bff;
+  --cat-market: #e8590c;
+  --cat-fatura: #8b3fd9;
+  --cat-ulasim: #0a8754;
+  --cat-eglence: #c98f00;
+  --cat-saglik: #d13b83;
+  --cat-diger: #8a8578;
+
+  --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-body: 'Geist', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, monospace;
+
+  --text-xs: 12px;
+  --text-sm: 13px;
+  --text-base: 15px;
+  --text-md: 16px;
+  --text-lg: 18px;
+  --text-h2: 26px;
+  --text-h1: clamp(32px, 4vw + 8px, 44px);
+  --text-hero: clamp(44px, 6vw + 8px, 76px);
+
+  --rule: 3px solid var(--color-ink);
+  --rule-thin: 2px solid var(--color-ink);
+
+  --shadow-sm: 3px 3px 0 var(--color-shadow);
+  --shadow: 4px 4px 0 var(--color-shadow);
+  --shadow-lg: 6px 6px 0 var(--color-shadow);
+  --shadow-xl: 10px 10px 0 var(--color-shadow);
+
+  --radius-sm: 8px;
+  --radius: 10px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-14: 56px;
+
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --dur-fast: 120ms;
+  --dur: 200ms;
+}
+
+/* Koyu tema: kâğıt kömür olur, mürekkep krem; sarı vurgu ve sert gölge dili aynı kalır.
+ * Aynı değerler iki kez yazılı: biri sistem tercihi, biri elle seçim için. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --color-paper: #121110;
+    --color-surface: #1f1c18;
+    --color-ink: #f1ebdd;
+    --color-shadow: #f1ebdd;
+    --color-muted: #b3aa98;
+    --color-faint: #8f8676;
+    --color-rule: #38332b;
+    --color-grid: #4a443a;
+    --color-accent-soft: #3d3412;
+    --color-row-hover: #2c2716;
+    --color-focus: #8c9bff;
+    --color-focus-ink: #b4beff;
+    --color-up: #4d231c;
+    --color-down: #173d2a;
+    --color-danger: #ff5c6c;
+    --color-disabled: #6b6457;
+    --color-disabled-bg: #2a2722;
+    --color-backdrop: rgb(0 0 0 / 0.6);
+    --color-inverse: #0a0908;
+    --color-on-inverse: #f1ebdd;
+    /* dataviz doğrulayıcısı: koyu zemin #1F1C18 */
+    --cat-kira: #5470ff;
+    --cat-market: #e8590c;
+    --cat-fatura: #9a55ec;
+    --cat-ulasim: #0e9a60;
+    --cat-eglence: #b07d00;
+    --cat-saglik: #db4790;
+    --cat-diger: #9a9282;
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --color-paper: #121110;
+  --color-surface: #1f1c18;
+  --color-ink: #f1ebdd;
+  --color-shadow: #f1ebdd;
+  --color-muted: #b3aa98;
+  --color-faint: #8f8676;
+  --color-rule: #38332b;
+  --color-grid: #4a443a;
+  --color-accent-soft: #3d3412;
+  --color-row-hover: #2c2716;
+  --color-focus: #8c9bff;
+  --color-focus-ink: #b4beff;
+  --color-up: #4d231c;
+  --color-down: #173d2a;
+  --color-danger: #ff5c6c;
+  --color-disabled: #6b6457;
+  --color-disabled-bg: #2a2722;
+  --color-backdrop: rgb(0 0 0 / 0.6);
+  --color-inverse: #0a0908;
+  --color-on-inverse: #f1ebdd;
+  --cat-kira: #5470ff;
+  --cat-market: #e8590c;
+  --cat-fatura: #9a55ec;
+  --cat-ulasim: #0e9a60;
+  --cat-eglence: #b07d00;
+  --cat-saglik: #db4790;
+  --cat-diger: #9a9282;
+}
