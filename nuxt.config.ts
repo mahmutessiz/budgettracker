@@ -19,6 +19,9 @@ export default defineNuxtConfig({
         { name: 'robots', content: 'noindex, nofollow' },
       ],
       link: [
+        { rel: 'manifest', href: '/manifest.webmanifest' },
+        { rel: 'icon', type: 'image/svg+xml', href: '/icon.svg' },
+        { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         {
