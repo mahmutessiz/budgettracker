@@ -9,6 +9,7 @@ const toast = useToast()
 
 const amountText = ref('')
 const category = ref<CategoryId>(categories.value[0]?.id ?? '')
+const quickCategories = computed(() => categories.value.slice(0, 8))
 const date = ref(todayISO())
 const description = ref('')
 const note = ref('')
@@ -200,17 +201,24 @@ function onKeydown(e: KeyboardEvent) {
             <legend class="legend">Kategori</legend>
             <div class="chips">
               <button
-                v-for="c in categories"
+                v-for="c in quickCategories"
                 :key="c.id"
                 type="button"
                 class="chip"
                 :aria-pressed="category === c.id"
+                :disabled="saving"
                 @click="category = c.id"
               >
                 <AppIcon :name="c.icon" :size="16" :style="{ color: c.cssColor }" />
                 {{ c.name }}
               </button>
             </div>
+            <label v-if="categories.length > quickCategories.length" class="field category-dropdown">
+              Tüm kategoriler
+              <select v-model="category" class="select" :disabled="saving" required>
+                <option v-for="c in categories" :key="c.id" :value="c.id">{{ c.name }}</option>
+              </select>
+            </label>
           </fieldset>
 
           <div class="row">
@@ -337,6 +345,13 @@ function onKeydown(e: KeyboardEvent) {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+}
+.category-dropdown {
+  margin-top: 1rem;
+}
+.category-dropdown .select {
+  width: 100%;
+  min-width: 0;
 }
 .chip {
   display: inline-flex;
