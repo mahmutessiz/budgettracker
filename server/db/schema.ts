@@ -117,6 +117,7 @@ export const categoryTable = sqliteTable('categories', {
   key: text('key').notNull().unique(),
   color: text('color').notNull().default('#8A8578'),
   cssColor: text('css_color').notNull().default('var(--cat-diger)'),
+  icon: text('icon').$type<import('../../shared/utils/categories').CategoryIcon>().notNull().default('tag'),
 })
 
 /** Frankfurter son başarılı yanıtı; API'ye ulaşılamazsa bu kullanılır. */

@@ -6,7 +6,7 @@ const cat = computed(() => categoryOf(props.id))
 
 <template>
   <span class="cat-tag">
-    <span class="swatch swatch--dot" :style="{ background: cat.cssColor }" aria-hidden="true" />
+    <AppIcon :name="cat.icon" :size="18" :style="{ color: cat.cssColor }" />
     {{ cat.name }}
   </span>
 </template>

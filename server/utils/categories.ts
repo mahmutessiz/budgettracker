@@ -5,7 +5,7 @@ import { db } from './db'
 
 export function getCategories(): Category[] {
   return db.select({ id: categoryTable.key, name: categoryTable.name,
-    color: categoryTable.color, cssColor: categoryTable.cssColor,
+    color: categoryTable.color, cssColor: categoryTable.cssColor, icon: categoryTable.icon,
   }).from(categoryTable).orderBy(categoryTable.id).all()
 }
 export function categoryExists(id: string): boolean {

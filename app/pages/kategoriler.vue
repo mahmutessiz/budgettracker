@@ -1,8 +1,16 @@
 <script lang="ts" setup>
+import { CATEGORY_ICONS, type Category, type CategoryIcon } from '#shared/utils/categories'
 const {data: categories, status, error, refresh} = await useFetch('/api/expenses/category', { key: 'categories' });
 
 const modalOpen = ref(false);
 const name = ref('');
+const color = ref('#8A8578')
+const icon = ref<CategoryIcon>('tag')
+const colorChanged = ref(false)
+const iconLabels: Record<CategoryIcon, string> = {
+  tag: 'Etiket', home: 'Ev', cart: 'Market', receipt: 'Fatura', car: 'Ulaşım',
+  music: 'Müzik', heart: 'Sağlık', gift: 'Hediye', book: 'Kitap', coffee: 'Kahve',
+}
 const saving = ref(false);
 const saveError = ref('');
 const editingId = ref<string | null>(null)
@@ -12,13 +20,19 @@ const deleteError = ref('')
 function openModal() {
   editingId.value = null
   name.value = ''
+  color.value = '#8A8578'
+  icon.value = 'tag'
+  colorChanged.value = false
   saveError.value = ''
   modalOpen.value = true
 }
 
-function editCategory(category: { id: string; name: string }) {
+function editCategory(category: Category) {
   editingId.value = category.id
   name.value = category.name
+  color.value = category.color
+  icon.value = category.icon
+  colorChanged.value = false
   saveError.value = ''
   modalOpen.value = true
 }
@@ -50,7 +64,7 @@ async function saveCategory() {
   try {
     await $fetch(editingId.value ? `/api/expenses/category/${encodeURIComponent(editingId.value)}` : '/api/expenses/category', {
       method: editingId.value ? 'PATCH' : 'POST',
-      body: { name: trimmedName },
+      body: { name: trimmedName, icon: icon.value, ...(!editingId.value || colorChanged.value ? { color: color.value } : {}) },
     })
 
     modalOpen.value = false
@@ -76,7 +90,7 @@ async function saveCategory() {
 
     <ul v-else class="category-list">
         <li v-for="category in categories" :key="category.id">
-          <span>{{ category.name }}</span>
+          <span class="category-label"><AppIcon :name="category.icon" :style="{ color: category.cssColor }" />{{ category.name }}</span>
           <div class="category-row-actions">
             <button type="button" class="btn" :disabled="!!deletingId" :aria-label="`${category.name} kategorisini düzenle`" @click="editCategory(category)">Düzenle</button>
             <button type="button" class="btn" :disabled="!!deletingId" :aria-label="`${category.name} kategorisini sil`" @click="deleteCategory(category)">{{ deletingId === category.id ? 'Siliniyor...' : 'Sil' }}</button>
@@ -109,6 +123,28 @@ async function saveCategory() {
             maxlength="80"
             :disabled="saving"
           >
+
+          <div class="color-field">
+            <label for="category-color">Renk</label>
+            <input id="category-color" v-model="color" type="color" :disabled="saving" @input="colorChanged = true">
+            <span>{{ color }}</span>
+          </div>
+
+          <fieldset class="icon-field" :disabled="saving">
+            <legend>Simge</legend>
+            <div class="icon-options">
+              <button v-for="option in CATEGORY_ICONS" :key="option" type="button"
+                class="icon-option" :aria-label="iconLabels[option]" :title="iconLabels[option]"
+                :aria-pressed="icon === option" @click="icon = option">
+                <AppIcon :name="option" :size="24" />
+              </button>
+            </div>
+          </fieldset>
+
+          <div class="category-preview">
+            <AppIcon :name="icon" :style="{ color }" />
+            <span>{{ name.trim() || 'Kategori adı' }}</span>
+          </div>
 
           <p v-if="saveError" role="alert">{{ saveError }}</p>
 
@@ -145,6 +181,41 @@ async function saveCategory() {
   list-style: none;
   padding: 0;
 }
+.category-label, .category-preview {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  overflow-wrap: anywhere;
+}
+.category-label svg, .category-preview svg { flex-shrink: 0; }
+.color-field {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+.color-field input[type='color'] {
+  width: 48px;
+  height: 40px;
+  padding: 3px;
+  margin: 0;
+  cursor: pointer;
+}
+.icon-field { border: 0; padding: 0; margin: 1rem 0; }
+.icon-options { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem; margin-top: 0.5rem; }
+.icon-option {
+  display: grid;
+  place-items: center;
+  min-height: 44px;
+  border: var(--rule);
+  border-radius: var(--radius-sm);
+  background: var(--color-paper);
+  color: var(--color-ink);
+  cursor: pointer;
+}
+.icon-option[aria-pressed='true'] { background: var(--color-accent); color: var(--color-on-accent); }
+.icon-option:focus-visible { outline: 3px solid var(--color-ink); outline-offset: 2px; }
+.category-preview { max-width: 100%; padding: 0.5rem 0; }
 .category-list li {
   min-width: 0;
   display: flex;
@@ -184,6 +255,9 @@ async function saveCategory() {
 }
 
 .category-modal {
+  box-sizing: border-box;
+  max-height: calc(100dvh - 2rem);
+  overflow-y: auto;
   width: 100%;
   max-width: 400px;
   padding: 1.5rem;

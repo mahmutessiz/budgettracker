@@ -1,5 +1,15 @@
 <script setup lang="ts">
 const ICONS = {
+  tag: '<path d="M3 3h8l10 10-8 8L3 11z"/><circle cx="7.5" cy="7.5" r="1"/>',
+  home: '<path d="M3 10l9-7 9 7v11H3zM9 21v-8h6v8"/>',
+  cart: '<path d="M2 3h3l3 13h11l3-10H6"/><circle cx="9" cy="21" r="1"/><circle cx="19" cy="21" r="1"/>',
+  receipt: '<path d="M5 3l2 2 2-2 3 2 3-2 2 2 2-2v18l-2-2-2 2-3-2-3 2-2-2-2 2zM9 9h6M9 13h6"/>',
+  car: '<path d="M3 17v-6l3-6h12l3 6v6zM3 11h18M6 17v3M18 17v3M6 14h2M16 14h2"/>',
+  music: '<path d="M9 18V5l12-2v13M9 9l12-2"/><ellipse cx="6" cy="18" rx="3" ry="3"/><ellipse cx="18" cy="16" rx="3" ry="3"/>',
+  heart: '<path d="M12 21L3 12C-3 5 6-1 12 6c6-7 15-1 9 6z"/>',
+  gift: '<path d="M3 9h18v4H3zM5 13v8h14v-8M12 9v12"/><path d="M12 9C2 9 5 0 9 4l3 5c10 0 7-9 3-5z"/>',
+  book: '<path d="M12 5v16M3 3c4 0 7 0 9 2 2-2 5-2 9-2v16c-4 0-7 0-9 2-2-2-5-2-9-2z"/>',
+  coffee: '<path d="M3 8h13v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4zM16 8h2a4 4 0 0 1 0 8h-2M6 2v2M10 2v2M14 2v2"/>',
   panel: '<rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/>',
   list: '<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>',
   pie: '<path d="M21 12A9 9 0 1 1 12 3v9z"/><path d="M15 3.5A9 9 0 0 1 20.5 9H15z"/>',
