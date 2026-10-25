@@ -1,5 +1,9 @@
 export type CategoryId = string
-export const CATEGORY_ICONS = ['tag', 'home', 'cart', 'receipt', 'car', 'music', 'heart', 'gift', 'book', 'coffee'] as const
+export const CATEGORY_ICONS = [
+  'tag', 'home', 'cart', 'receipt', 'car', 'music', 'heart', 'gift', 'book', 'coffee',
+  'briefcase', 'plane', 'utensils', 'shirt', 'paw', 'dumbbell', 'phone', 'laptop', 'leaf', 'wallet',
+  'users', 'calendar', 'key', 'sun', 'moon',
+] as const
 export type CategoryIcon = (typeof CATEGORY_ICONS)[number]
 export interface Category {
   id: CategoryId

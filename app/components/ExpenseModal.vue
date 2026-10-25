@@ -207,7 +207,7 @@ function onKeydown(e: KeyboardEvent) {
                 :aria-pressed="category === c.id"
                 @click="category = c.id"
               >
-                <span class="swatch swatch--dot chip-dot" :style="{ background: c.cssColor }" aria-hidden="true" />
+                <AppIcon :name="c.icon" :size="16" :style="{ color: c.cssColor }" />
                 {{ c.name }}
               </button>
             </div>

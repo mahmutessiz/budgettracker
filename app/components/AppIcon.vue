@@ -1,5 +1,15 @@
 <script setup lang="ts">
 const ICONS = {
+  briefcase: '<rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V3h8v4M3 12c6 4 12 4 18 0M12 12v4"/>',
+  plane: '<path d="M22 2L9 15l-7-3 20-10-10 20-3-7M9 15l-4 4"/>',
+  utensils: '<path d="M4 3v7a3 3 0 0 0 6 0V3M7 3v18M20 21V3c-5 3-5 10 0 10"/>',
+  shirt: '<path d="M8 3L2 7l3 5 3-2v11h8V10l3 2 3-5-6-4a4 4 0 0 1-8 0z"/>',
+  paw: '<ellipse cx="5" cy="9" rx="2" ry="3"/><ellipse cx="10" cy="5" rx="2" ry="3"/><ellipse cx="16" cy="5" rx="2" ry="3"/><ellipse cx="21" cy="10" rx="2" ry="3"/><path d="M6 19c-2-3 3-9 6-9s8 6 6 9c-2 3-4 0-6 0s-4 3-6 0z"/>',
+  dumbbell: '<path d="M6 3v18M3 7v10M18 3v18M21 7v10M6 12h12"/>',
+  phone: '<rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 5h4M11 19h2"/>',
+  laptop: '<rect x="4" y="3" width="16" height="13" rx="1"/><path d="M4 16l-3 5h22l-3-5M9 18h6"/>',
+  leaf: '<path d="M20 3C5 1 1 9 5 16s17 7 15-13zM4 21L16 9"/>',
+  wallet: '<path d="M21 7H5a3 3 0 0 1 0-6h13v6M3 4v17h18V7M21 11h-6v6h6"/><path d="M17 14h.01"/>',
   tag: '<path d="M3 3h8l10 10-8 8L3 11z"/><circle cx="7.5" cy="7.5" r="1"/>',
   home: '<path d="M3 10l9-7 9 7v11H3zM9 21v-8h6v8"/>',
   cart: '<path d="M2 3h3l3 13h11l3-10H6"/><circle cx="9" cy="21" r="1"/><circle cx="19" cy="21" r="1"/>',

@@ -7,7 +7,14 @@ const name = ref('');
 const color = ref('#8A8578')
 const icon = ref<CategoryIcon>('tag')
 const colorChanged = ref(false)
+const showMoreIcons = ref(false)
+const visibleIcons = computed(() => showMoreIcons.value
+  ? CATEGORY_ICONS
+  : CATEGORY_ICONS.filter((option, index) => index < 10 || option === icon.value))
 const iconLabels: Record<CategoryIcon, string> = {
+  briefcase: 'İş', plane: 'Seyahat', utensils: 'Yemek', shirt: 'Giyim', paw: 'Evcil hayvan',
+  dumbbell: 'Spor', phone: 'Telefon', laptop: 'Bilgisayar', leaf: 'Doğa', wallet: 'Cüzdan',
+  users: 'Aile', calendar: 'Takvim', key: 'Anahtar', sun: 'Güneş', moon: 'Ay',
   tag: 'Etiket', home: 'Ev', cart: 'Market', receipt: 'Fatura', car: 'Ulaşım',
   music: 'Müzik', heart: 'Sağlık', gift: 'Hediye', book: 'Kitap', coffee: 'Kahve',
 }
@@ -19,6 +26,7 @@ const deleteError = ref('')
 
 function openModal() {
   editingId.value = null
+  showMoreIcons.value = false
   name.value = ''
   color.value = '#8A8578'
   icon.value = 'tag'
@@ -29,6 +37,7 @@ function openModal() {
 
 function editCategory(category: Category) {
   editingId.value = category.id
+  showMoreIcons.value = false
   name.value = category.name
   color.value = category.color
   icon.value = category.icon
@@ -132,13 +141,17 @@ async function saveCategory() {
 
           <fieldset class="icon-field" :disabled="saving">
             <legend>Simge</legend>
-            <div class="icon-options">
-              <button v-for="option in CATEGORY_ICONS" :key="option" type="button"
+            <div id="category-icon-options" class="icon-options">
+              <button v-for="option in visibleIcons" :key="option" type="button"
                 class="icon-option" :aria-label="iconLabels[option]" :title="iconLabels[option]"
                 :aria-pressed="icon === option" @click="icon = option">
                 <AppIcon :name="option" :size="24" />
               </button>
             </div>
+            <button type="button" class="btn more-icons" :aria-expanded="showMoreIcons"
+              aria-controls="category-icon-options" @click="showMoreIcons = !showMoreIcons">
+              {{ showMoreIcons ? 'Daha az göster' : 'Daha fazla simge' }}
+            </button>
           </fieldset>
 
           <div class="category-preview">
@@ -202,6 +215,7 @@ async function saveCategory() {
   cursor: pointer;
 }
 .icon-field { border: 0; padding: 0; margin: 1rem 0; }
+.more-icons { margin-top: 0.75rem; width: 100%; }
 .icon-options { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem; margin-top: 0.5rem; }
 .icon-option {
   display: grid;
