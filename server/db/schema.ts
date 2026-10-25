@@ -111,6 +111,11 @@ export const expense = sqliteTable(
   (t) => [index('expense_user_date_idx').on(t.userId, t.date), index('expense_fx_date_idx').on(t.fxDate)],
 )
 
+export const categoryTable = sqliteTable('categories', {
+  id: integer('id').primaryKey(),
+  name: text('name').notNull(),
+})
+
 /** Frankfurter son başarılı yanıtı; API'ye ulaşılamazsa bu kullanılır. */
 export const exchangeRate = sqliteTable('exchange_rate', {
   base: text('base').primaryKey(),
