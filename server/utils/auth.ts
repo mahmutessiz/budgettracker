@@ -4,6 +4,7 @@ import { admin } from 'better-auth/plugins'
 import { eq } from 'drizzle-orm'
 import * as schema from '../db/schema'
 import { db } from './db'
+import { createDefaultCategories } from './default-categories'
 
 const baseURL = (process.env.BETTER_AUTH_URL || 'http://localhost:5153').trim()
 const trustedProxies = process.env.BETTER_AUTH_TRUSTED_PROXIES?.split(',').map(ip => ip.trim()).filter(Boolean)
@@ -37,6 +38,11 @@ export const auth = betterAuth({
     },
   },
   databaseHooks: {
+    user: {
+      create: {
+        after: async (user) => { createDefaultCategories(user.id) },
+      },
+    },
     session: {
       create: {
         after: async (s) => {

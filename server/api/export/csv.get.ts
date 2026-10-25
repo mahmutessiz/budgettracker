@@ -13,7 +13,7 @@ function cell(value: string): string {
 const num = (v: number) => v.toFixed(2).replace('.', ',')
 
 export default defineEventHandler(async (event) => {
-  const { rows, currency, fileStem } = await loadExport(event)
+  const { user, rows, currency, fileStem } = await loadExport(event)
   const foreign = currency !== 'TRY'
 
   const header = ['Tarih', 'Açıklama', 'Not', 'Kategori', 'Tutar (TRY)']
@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
 
   const lines = [header.map(cell).join(SEP)]
   for (const r of rows) {
-    const line = [formatDateTR(r.date), r.description, r.note ?? '', categoryOf(r.category).name, num(r.amount / 100)]
+    const line = [formatDateTR(r.date), r.description, r.note ?? '', categoryOf(user.id, r.category).name, num(r.amount / 100)]
     if (foreign) {
       // Kayıttaki kur; henüz tamamlanmadıysa güncel kurla yaklaşık (tarih boş kalır)
       const rate = r.fxRates?.[currency]

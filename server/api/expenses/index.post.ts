@@ -2,7 +2,7 @@ import { expense } from '../../db/schema'
 
 export default defineEventHandler(async (event) => {
   const user = await requireUser(event)
-  const body = await readValidatedBody(event, expenseInputSchema.parse)
+  const body = await readValidatedBody(event, expenseInputSchema(user.id).parse)
   // Kayıt anının kuru saklanır; kur alınamazsa arka planda tamamlanır.
   const snap = await snapshotFor(body.date)
   const row = db

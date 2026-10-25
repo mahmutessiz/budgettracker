@@ -29,6 +29,13 @@
       "when": 1792915000000,
       "tag": "0003_category_icons",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1792919831623,
+      "tag": "0004_ancient_titania",
+      "breakpoints": true
     }
   ]
 }

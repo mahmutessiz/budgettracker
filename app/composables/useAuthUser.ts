@@ -6,6 +6,7 @@ export function useAuthUser() {
   async function signOut() {
     await authClient.signOut()
     user.value = null
+    clearNuxtData('categories')
     await navigateTo('/giris')
   }
 

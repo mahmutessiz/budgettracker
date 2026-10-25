@@ -4,7 +4,7 @@ import { expense } from '../../db/schema'
 export default defineEventHandler(async (event) => {
   const user = await requireUser(event)
   const id = getRouterParam(event, 'id')!
-  const body = await readValidatedBody(event, expenseInputSchema.parse)
+  const body = await readValidatedBody(event, expenseInputSchema(user.id).parse)
   const owned = and(eq(expense.id, id), eq(expense.userId, user.id))
 
   const existing = db.select().from(expense).where(owned).get()

@@ -36,6 +36,7 @@ async function loadFonts() {
 }
 
 export interface ReportInput {
+  userId: string
   userName: string
   periodLabel: string
   filterLabel: string
@@ -103,7 +104,7 @@ export async function renderReportPdf(input: ReportInput): Promise<Buffer> {
   const byCat = new Map<string, number>()
   for (const r of input.rows) byCat.set(r.category, (byCat.get(r.category) ?? 0) + valueOf(r))
   const cats = [...byCat.entries()].sort((a, b) => b[1] - a[1])
-  const topCat = cats[0] ? categoryOf(cats[0][0]).name : '—'
+  const topCat = cats[0] ? categoryOf(input.userId, cats[0][0]).name : '—'
 
   const boxes: [string, string, boolean][] = [
     ['Toplam', money(total), true],
@@ -137,7 +138,7 @@ export async function renderReportPdf(input: ReportInput): Promise<Buffer> {
     y += 22
   }
   for (const [id, value] of cats) {
-    const c = categoryOf(id)
+    const c = categoryOf(input.userId, id)
     doc.lineWidth(1.5).rect(left, y + 4, 8, 8).fillAndStroke(c.color, INK)
     doc.fillColor(INK).font('regular').fontSize(9).text(c.name, left + 14, y + 3, { lineBreak: false })
     const w = Math.max(4, (value / maxCat) * barMaxW)
@@ -203,7 +204,7 @@ export async function renderReportPdf(input: ReportInput): Promise<Buffer> {
     const values: Record<string, string> = {
       date: formatDateTR(r.date),
       desc: r.description,
-      cat: categoryOf(r.category).name,
+      cat: categoryOf(input.userId, r.category).name,
       amt: money(valueOf(r)),
       orig: money(r.amount / 100, 'TRY'),
     }

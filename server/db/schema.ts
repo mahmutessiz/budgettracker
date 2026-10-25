@@ -1,5 +1,5 @@
 import { sql } from 'drizzle-orm'
-import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
+import { index, integer, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core'
 
 const timestamps = {
   createdAt: integer('created_at', { mode: 'timestamp_ms' })
@@ -112,13 +112,14 @@ export const expense = sqliteTable(
 )
 
 export const categoryTable = sqliteTable('categories', {
+  userId: text('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
   id: integer('id').primaryKey(),
   name: text('name').notNull(),
-  key: text('key').notNull().unique(),
+  key: text('key').notNull(),
   color: text('color').notNull().default('#8A8578'),
   cssColor: text('css_color').notNull().default('var(--cat-diger)'),
   icon: text('icon').$type<import('../../shared/utils/categories').CategoryIcon>().notNull().default('tag'),
-})
+}, (t) => [uniqueIndex('categories_user_key_unique').on(t.userId, t.key)])
 
 /** Frankfurter son başarılı yanıtı; API'ye ulaşılamazsa bu kullanılır. */
 export const exchangeRate = sqliteTable('exchange_rate', {

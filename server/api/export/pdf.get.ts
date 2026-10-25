@@ -1,6 +1,7 @@
 export default defineEventHandler(async (event) => {
   const { user, rows, currency, periodLabel, filterLabel, fileStem } = await loadExport(event)
   const pdf = await renderReportPdf({
+    userId: user.id,
     userName: user.name,
     periodLabel,
     filterLabel,

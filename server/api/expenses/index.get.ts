@@ -3,7 +3,7 @@ import { expense } from '../../db/schema'
 
 export default defineEventHandler(async (event): Promise<ExpenseListResponse> => {
   const user = await requireUser(event)
-  const q = await getValidatedQuery(event, listQuerySchema.parse)
+  const q = await getValidatedQuery(event, listQuerySchema(user.id).parse)
   const where = expenseWhere(user.id, q)
   const { rates } = await getRates()
 

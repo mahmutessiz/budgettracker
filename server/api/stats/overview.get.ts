@@ -52,7 +52,7 @@ export default defineEventHandler(async (event): Promise<OverviewResponse> => {
       .all()
   const cur = totalsFor(month)
   const prev = totalsFor(previous)
-  const rows = getCategories().map((c) => ({
+  const rows = getCategories(user.id).map((c) => ({
     category: c.id,
     previous: prev.find((r) => r.category === c.id)?.total ?? ZERO_MONEY,
     current: cur.find((r) => r.category === c.id)?.total ?? ZERO_MONEY,

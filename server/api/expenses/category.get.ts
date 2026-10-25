@@ -1,4 +1,4 @@
 export default defineEventHandler(async (event) => {
-  await requireUser(event)
-  return getCategories()
+  const user = await requireUser(event)
+  return getCategories(user.id)
 })

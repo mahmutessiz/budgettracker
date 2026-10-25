@@ -11,10 +11,10 @@ import { convertWith } from './fx'
 
 const isoDate = z.string().refine(isISODate, 'Geçersiz tarih')
 
-export const expenseInputSchema = z.object({
+export const expenseInputSchema = (userId: string) => z.object({
   amount: z.number().int().positive().max(MAX_AMOUNT_MINOR),
   date: isoDate,
-  category: z.string().min(1).refine(categoryExists, 'Invalid category'),
+  category: z.string().min(1).refine((id) => categoryExists(userId, id), 'Invalid category'),
   description: z.string().trim().min(1, 'Açıklama gerekli').max(120),
   note: z
     .string()
@@ -26,24 +26,24 @@ export const expenseInputSchema = z.object({
 
 export const SORTS = ['new', 'old', 'amount_desc', 'amount_asc'] as const
 
-export const expenseFilterSchema = z.object({
+export const expenseFilterSchema = (userId: string) => z.object({
   from: isoDate.optional(),
   to: isoDate.optional(),
-  category: z.string().min(1).refine(categoryExists, 'Invalid category').optional(),
+  category: z.string().min(1).refine((id) => categoryExists(userId, id), 'Invalid category').optional(),
   q: z.string().trim().max(100).optional(),
   sort: z.enum(SORTS).default('new'),
 })
 
-export const listQuerySchema = expenseFilterSchema.extend({
+export const listQuerySchema = (userId: string) => expenseFilterSchema(userId).extend({
   page: z.coerce.number().int().min(1).default(1),
   pageSize: z.coerce.number().int().min(1).max(100).default(10),
 })
 
-export const exportQuerySchema = expenseFilterSchema.extend({
+export const exportQuerySchema = (userId: string) => expenseFilterSchema(userId).extend({
   currency: z.string().refine(isCurrencyCode).default('TRY'),
 })
 
-export type ExpenseFilters = z.infer<typeof expenseFilterSchema>
+export type ExpenseFilters = z.infer<ReturnType<typeof expenseFilterSchema>>
 
 export function expenseWhere(userId: string, f: Partial<ExpenseFilters>): SQL {
   const conditions: (SQL | undefined)[] = [eq(expense.userId, userId)]

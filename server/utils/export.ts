@@ -7,7 +7,7 @@ import { expense } from '../db/schema'
 /** Dışa aktarma uçlarının ortak kısmı: filtrele, kur al, dosya adı üret. */
 export async function loadExport(event: H3Event) {
   const user = await requireUser(event)
-  const q = await getValidatedQuery(event, exportQuerySchema.parse)
+  const q = await getValidatedQuery(event, exportQuerySchema(user.id).parse)
   const currency = q.currency as CurrencyCode
 
   const { rates } = await getRates()
@@ -25,7 +25,7 @@ export async function loadExport(event: H3Event) {
 
   const periodLabel =
     q.from && q.to ? formatRange(q.from, q.to) : q.from ? `${q.from} sonrası` : q.to ? `${q.to} öncesi` : 'Tüm kayıtlar'
-  const filterParts = [q.category ? categoryOf(q.category).name : 'Tüm kategoriler']
+  const filterParts = [q.category ? categoryOf(user.id, q.category).name : 'Tüm kategoriler']
   if (q.q) filterParts.push(`“${q.q}”`)
 
   const fileStem = `defter-${q.from ?? 'baslangic'}_${q.to ?? 'bugun'}${currency === 'TRY' ? '' : `-${currency}`}`
