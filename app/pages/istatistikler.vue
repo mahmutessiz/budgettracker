@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { categoryOf } = useCategories()
 import type { OverviewResponse } from '#shared/types/api'
 
 useHead({ title: 'İstatistikler — defter.' })

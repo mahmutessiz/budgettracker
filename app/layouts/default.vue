@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const { user } = useAuthUser()
 const isAdmin = computed(() => user.value?.role === 'admin')
+await useFetch('/api/expenses/category', { key: 'categories' })
 </script>
 
 <template>

@@ -1,4 +1,4 @@
-import { categoryOf } from '#shared/utils/categories'
+import { categoryOf } from '../../utils/categories'
 import { formatDateTR } from '#shared/utils/dates'
 
 // Türkçe Excel ondalık virgül ve ; ayırıcı bekler.

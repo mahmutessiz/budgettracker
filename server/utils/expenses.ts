@@ -1,7 +1,8 @@
 import { and, asc, desc, eq, gte, lte, or, sql, type SQL } from 'drizzle-orm'
 import { z } from 'zod'
 import { MAX_AMOUNT_MINOR } from '#shared/utils/amount'
-import { CATEGORY_IDS, type CategoryId } from '#shared/utils/categories'
+import type { CategoryId } from '#shared/utils/categories'
+import { categoryExists } from './categories'
 import { isCurrencyCode, type RatesPayload } from '#shared/utils/currency'
 import { isISODate } from '#shared/utils/dates'
 import type { ExpenseDTO } from '#shared/types/api'
@@ -13,7 +14,7 @@ const isoDate = z.string().refine(isISODate, 'Geçersiz tarih')
 export const expenseInputSchema = z.object({
   amount: z.number().int().positive().max(MAX_AMOUNT_MINOR),
   date: isoDate,
-  category: z.enum(CATEGORY_IDS),
+  category: z.string().min(1).refine(categoryExists, 'Invalid category'),
   description: z.string().trim().min(1, 'Açıklama gerekli').max(120),
   note: z
     .string()
@@ -28,7 +29,7 @@ export const SORTS = ['new', 'old', 'amount_desc', 'amount_asc'] as const
 export const expenseFilterSchema = z.object({
   from: isoDate.optional(),
   to: isoDate.optional(),
-  category: z.enum(CATEGORY_IDS).optional(),
+  category: z.string().min(1).refine(categoryExists, 'Invalid category').optional(),
   q: z.string().trim().max(100).optional(),
   sort: z.enum(SORTS).default('new'),
 })

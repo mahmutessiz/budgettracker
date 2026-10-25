@@ -1,5 +1,5 @@
 import PDFDocument from 'pdfkit'
-import { categoryOf } from '#shared/utils/categories'
+import { categoryOf } from './categories'
 import { formatAmount, formatPercent, type CurrencyCode } from '#shared/utils/currency'
 import { formatDateTR } from '#shared/utils/dates'
 import type { ExpenseDTO } from '#shared/types/api'

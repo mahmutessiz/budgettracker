@@ -11,6 +11,7 @@ const items = computed(() =>
         { to: '/', label: 'Panel', icon: 'panel' as const },
         { to: '/harcamalar', label: 'Harcamalar', icon: 'list' as const },
         { to: '/istatistikler', label: 'İstatistikler', icon: 'pie' as const },
+        {to: '/kategoriler', label: 'Kategoriler', icon: 'plus' as const}
       ],
 )
 

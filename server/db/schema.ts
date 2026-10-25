@@ -114,6 +114,9 @@ export const expense = sqliteTable(
 export const categoryTable = sqliteTable('categories', {
   id: integer('id').primaryKey(),
   name: text('name').notNull(),
+  key: text('key').notNull().unique(),
+  color: text('color').notNull().default('#8A8578'),
+  cssColor: text('css_color').notNull().default('var(--cat-diger)'),
 })
 
 /** Frankfurter son başarılı yanıtı; API'ye ulaşılamazsa bu kullanılır. */

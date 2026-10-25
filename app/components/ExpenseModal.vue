@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { categories } = useCategories()
 import type { ExpenseDTO } from '#shared/types/api'
 import type { CategoryId } from '#shared/utils/categories'
 import type { RatesPayload } from '#shared/utils/currency'
@@ -7,7 +8,7 @@ const { state, close } = useExpenseModal()
 const toast = useToast()
 
 const amountText = ref('')
-const category = ref<CategoryId>('market')
+const category = ref<CategoryId>(categories.value[0]?.id ?? '')
 const date = ref(todayISO())
 const description = ref('')
 const note = ref('')
@@ -76,7 +77,7 @@ const preview = computed(() => {
 
 function fill(e: ExpenseDTO | null) {
   amountText.value = e ? minorToInput(e.amount) : ''
-  category.value = e?.category ?? category.value
+  category.value = e?.category ?? (categories.value.some((c) => c.id === category.value) ? category.value : categories.value[0]?.id ?? '')
   date.value = e?.date ?? todayISO()
   description.value = e?.description ?? ''
   note.value = e?.note ?? ''
@@ -106,6 +107,10 @@ async function save(keepOpen: boolean) {
   submitted.value = true
   serverError.value = ''
   if (amountMinor.value === null || !description.value.trim() || !isISODate(date.value)) return
+  if (!categories.value.some((c) => c.id === category.value)) {
+    serverError.value = 'L?tfen bir kategori se?in.'
+    return
+  }
   saving.value = true
   const body = {
     amount: amountMinor.value,
@@ -195,7 +200,7 @@ function onKeydown(e: KeyboardEvent) {
             <legend class="legend">Kategori</legend>
             <div class="chips">
               <button
-                v-for="c in CATEGORIES"
+                v-for="c in categories"
                 :key="c.id"
                 type="button"
                 class="chip"

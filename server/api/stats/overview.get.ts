@@ -1,6 +1,6 @@
 import { desc } from 'drizzle-orm'
 import { z } from 'zod'
-import { CATEGORIES, type CategoryId } from '#shared/utils/categories'
+import type { CategoryId } from '#shared/utils/categories'
 import { ZERO_MONEY } from '#shared/utils/currency'
 import { addMonths, isMonthKey, monthRange, todayISO } from '#shared/utils/dates'
 import type { OverviewResponse } from '#shared/types/api'
@@ -52,7 +52,7 @@ export default defineEventHandler(async (event): Promise<OverviewResponse> => {
       .all()
   const cur = totalsFor(month)
   const prev = totalsFor(previous)
-  const rows = CATEGORIES.map((c) => ({
+  const rows = getCategories().map((c) => ({
     category: c.id,
     previous: prev.find((r) => r.category === c.id)?.total ?? ZERO_MONEY,
     current: cur.find((r) => r.category === c.id)?.total ?? ZERO_MONEY,

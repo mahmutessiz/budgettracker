@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { categoryOf } = useCategories()
 import type { MonthSummary } from '#shared/types/api'
 
 useHead({ title: 'Panel — defter.' })

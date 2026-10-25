@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { categories, isCategoryId } = useCategories()
 import type { ExpenseDTO, ExpenseListResponse } from '#shared/types/api'
 import type { PeriodId } from '#shared/utils/dates'
 
@@ -153,7 +154,7 @@ async function remove(e: ExpenseDTO) {
           Kategori
           <select class="select" :value="category" @change="setQuery({ kategori: ($event.target as HTMLSelectElement).value || undefined })">
             <option value="">Tüm kategoriler</option>
-            <option v-for="c in CATEGORIES" :key="c.id" :value="c.id">{{ c.name }}</option>
+            <option v-for="c in categories" :key="c.id" :value="c.id">{{ c.name }}</option>
           </select>
         </label>
         <label class="field">

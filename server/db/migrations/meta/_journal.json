@@ -15,6 +15,13 @@
       "when": 1792691201898,
       "tag": "0001_expense_fx",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1792890000000,
+      "tag": "0002_categories",
+      "breakpoints": true
     }
   ]
 }

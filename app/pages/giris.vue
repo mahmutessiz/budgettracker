@@ -45,7 +45,7 @@ async function submit() {
         <p class="hero-sub">Harcamanı yaz, ay sonunda nereye gittiğini gör.</p>
       </div>
       <div class="swatches" aria-hidden="true">
-        <span v-for="c in CATEGORIES.slice(0, 6)" :key="c.id" :style="{ background: c.cssColor }" />
+        <span v-for="color in ['kira', 'market', 'fatura', 'ulasim', 'eglence', 'saglik']" :key="color" :style="{ background: `var(--cat-${color})` }" />
       </div>
     </section>
 

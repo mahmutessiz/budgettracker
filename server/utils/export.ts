@@ -1,5 +1,5 @@
 import type { H3Event } from 'h3'
-import { categoryOf } from '#shared/utils/categories'
+import { categoryOf } from './categories'
 import type { CurrencyCode } from '#shared/utils/currency'
 import { formatRange } from '#shared/utils/dates'
 import { expense } from '../db/schema'

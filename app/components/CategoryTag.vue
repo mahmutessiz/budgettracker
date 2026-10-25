@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { categoryOf } = useCategories()
 const props = defineProps<{ id: string }>()
 const cat = computed(() => categoryOf(props.id))
 </script>
